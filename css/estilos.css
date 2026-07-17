@@ -1,0 +1,708 @@
+<<<<<<< HEAD
+/* ==========================================================================
+   1. CONFIGURACIÓN GENERAL Y RESET
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #f4f6f9;
+    color: #212529;
+    min-height: 100vh;
+    padding: 20px;
+    padding-top: 110px !important; /* 👈  Da espacio físico para que el Header no pise los formularios */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Evita que estire verticalmente vistas muy largas */
+}
+
+/* Contenedor principal de la aplicación */
+.app-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;margin-top: 20px; /* 👈  Cambiado de 50px a 20px para equilibrar con el padding-top del body */
+}
+
+/* ==========================================================================
+   2. CONTROL DE VISTAS (CORREGIDO PARA INTERACCIÓN CON JS)
+   ========================================================================== */
+.vista, .pantalla-sistema {
+    display: none; /* Oculto por defecto sin !important para permitir cambios */
+    width: 100%;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* Solo le ponemos fuerza a la clase activa de las pantallas iniciales */
+.vista.activa {
+    display: block !important;
+}
+
+/* Cuando tu JS activa manualmente el bloque de RRHH */
+#vistaRRHH[style*="display: block"] {
+    display: block !important;
+}
+
+/* ==========================================================================
+   3. ESTILOS PARA VISTAS CORTAS (Bienvenida, Login, Registro de Cuentas)
+   ========================================================================== */
+#vistaBienvenida, #vistaLogin, #vistaRegistro {
+    max-width: 420px;
+    padding: 35px;
+    margin: 40px auto;
+}
+
+#vistaBienvenida {
+    text-align: center;
+}
+
+#vistaBienvenida h1 {
+    font-size: 26px;
+    margin-bottom: 12px;
+    color: #111111;
+}
+
+#vistaBienvenida p, #vistaLogin p, #vistaRegistro p {
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* Contenedores de botones en menú */
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ==========================================================================
+   4. ESTILOS PARA VISTAS GRANDES (Módulo RRHH)
+   ========================================================================== */
+#vistaRRHH {
+    max-width: 850px;
+    margin: 20px auto;
+}
+
+.modulo-container {
+    padding: 40px;
+}
+
+/* Subtítulo de módulo */
+.modulo-container > span {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #6c757d;
+    letter-spacing: 0.8px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+/* Pestañas de Navegación de RRHH */
+.nav-rrhh {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 30px;
+    list-style: none;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 12px;
+}
+
+.nav-rrhh a {
+    color: #495057;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.nav-rrhh a:hover {
+    background-color: #f8f9fa;
+    color: #0d6efd;
+}
+
+/* Título interno del formulario */
+h2 {
+    color: #111111;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+/* Formulario en dos columnas */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+/* ==========================================================================
+   5. COMPONENTES DE FORMULARIO (Inputs, Labels, Grupos)
+   ========================================================================== */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.form-grid .form-group {
+    margin-bottom: 0; /* El espacio lo controla el grid */
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    outline: none;
+    background-color: #ffffff;
+    color: #212529;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+/* ==========================================================================
+   6. BOTONES UNIFICADOS
+   ========================================================================== */
+.btn, .btn-primary, .btn-secondary, .btn-back, .btn-guardar {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    text-align: center;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Variaciones de color */
+.btn-primary, .btn-guardar {
+    background-color: #0d6efd;
+    color: #ffffff;
+}
+
+.btn-primary:hover, .btn-guardar:hover {
+    background-color: #0b5ed7;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.btn-secondary:hover {
+    background-color: #5c636a;
+}
+
+.btn-back {
+    background-color: transparent;
+    color: #0d6efd;
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+.btn-back:hover {
+    text-decoration: underline;
+}
+
+/* Acciones en formularios anchos (Alineado a la derecha) */
+.form-actions {
+    grid-column: span 2;
+    margin-top: 15px;
+    text-align: right;
+}
+
+.form-actions .btn-guardar {
+    width: auto;
+    display: inline-block;
+    padding: 12px 30px;
+}
+/* ==========================================================================
+   7. ENCABEZADO DE SESIÓN ACTIVA (HEADER) - CORREGIDO FORZADO
+   ========================================================================== */
+.header-sistema {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0; /* Al definir left y right, se estira obligatoriamente al 100% */
+    height: 70px; /* Altura fija para evitar colapsos por flexbox */
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0 30px;
+    z-index: 9999 !important; /* Lo mandamos al frente de todo */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    display: none; /* Controlado por JS */
+}
+
+.header-contenido {
+    max-width: 1200px;
+    height: 100%; /* Ocupa los 70px del padre */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.usuario-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar-icon {
+    font-size: 22px;
+    background: #e9ecef;
+    padding: 6px 10px;
+    border-radius: 50%;
+}
+
+.detalles {
+    display: flex;
+    flex-direction: column;
+}
+
+.nombre-u {
+    font-size: 14px;
+    font-weight: 700;
+    color: #212529;
+    line-height: 1.2;
+}
+
+.rol-u {
+    font-size: 11px;
+    font-weight: 600;
+    color: #0d6efd; /* Cambiado a azul para que resalte más */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-logout {
+    background-color: #fff0f1;
+    color: #dc3545;
+    border: 1px solid #fecaca;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+    border-color: #dc3545;
+}
+
+/* Modificamos el contenedor principal para que no se pegue al techo */
+.app-container {
+    margin-top: 50px; 
+}
+
+
+/* modal global para mensajes */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.modal-contenido {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+=======
+/* ==========================================================================
+   1. CONFIGURACIÓN GENERAL Y RESET
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #f4f6f9;
+    color: #212529;
+    min-height: 100vh;
+    padding: 20px;
+    padding-top: 110px !important; /* 👈  Da espacio físico para que el Header no pise los formularios */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Evita que estire verticalmente vistas muy largas */
+}
+
+/* Contenedor principal de la aplicación */
+.app-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;margin-top: 20px; /* 👈  Cambiado de 50px a 20px para equilibrar con el padding-top del body */
+}
+
+/* ==========================================================================
+   2. CONTROL DE VISTAS (CORREGIDO PARA INTERACCIÓN CON JS)
+   ========================================================================== */
+.vista, .pantalla-sistema {
+    display: none; /* Oculto por defecto sin !important para permitir cambios */
+    width: 100%;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* Solo le ponemos fuerza a la clase activa de las pantallas iniciales */
+.vista.activa {
+    display: block !important;
+}
+
+/* Cuando tu JS activa manualmente el bloque de RRHH */
+#vistaRRHH[style*="display: block"] {
+    display: block !important;
+}
+
+/* ==========================================================================
+   3. ESTILOS PARA VISTAS CORTAS (Bienvenida, Login, Registro de Cuentas)
+   ========================================================================== */
+#vistaBienvenida, #vistaLogin, #vistaRegistro {
+    max-width: 420px;
+    padding: 35px;
+    margin: 40px auto;
+}
+
+#vistaBienvenida {
+    text-align: center;
+}
+
+#vistaBienvenida h1 {
+    font-size: 26px;
+    margin-bottom: 12px;
+    color: #111111;
+}
+
+#vistaBienvenida p, #vistaLogin p, #vistaRegistro p {
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* Contenedores de botones en menú */
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ==========================================================================
+   4. ESTILOS PARA VISTAS GRANDES (Módulo RRHH)
+   ========================================================================== */
+#vistaRRHH {
+    max-width: 850px;
+    margin: 20px auto;
+}
+
+.modulo-container {
+    padding: 40px;
+}
+
+/* Subtítulo de módulo */
+.modulo-container > span {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #6c757d;
+    letter-spacing: 0.8px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+/* Pestañas de Navegación de RRHH */
+.nav-rrhh {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 30px;
+    list-style: none;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 12px;
+}
+
+.nav-rrhh a {
+    color: #495057;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.nav-rrhh a:hover {
+    background-color: #f8f9fa;
+    color: #0d6efd;
+}
+
+/* Título interno del formulario */
+h2 {
+    color: #111111;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+/* Formulario en dos columnas */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+/* ==========================================================================
+   5. COMPONENTES DE FORMULARIO (Inputs, Labels, Grupos)
+   ========================================================================== */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.form-grid .form-group {
+    margin-bottom: 0; /* El espacio lo controla el grid */
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    outline: none;
+    background-color: #ffffff;
+    color: #212529;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+/* ==========================================================================
+   6. BOTONES UNIFICADOS
+   ========================================================================== */
+.btn, .btn-primary, .btn-secondary, .btn-back, .btn-guardar {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    text-align: center;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Variaciones de color */
+.btn-primary, .btn-guardar {
+    background-color: #0d6efd;
+    color: #ffffff;
+}
+
+.btn-primary:hover, .btn-guardar:hover {
+    background-color: #0b5ed7;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.btn-secondary:hover {
+    background-color: #5c636a;
+}
+
+.btn-back {
+    background-color: transparent;
+    color: #0d6efd;
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+.btn-back:hover {
+    text-decoration: underline;
+}
+
+/* Acciones en formularios anchos (Alineado a la derecha) */
+.form-actions {
+    grid-column: span 2;
+    margin-top: 15px;
+    text-align: right;
+}
+
+.form-actions .btn-guardar {
+    width: auto;
+    display: inline-block;
+    padding: 12px 30px;
+}
+/* ==========================================================================
+   7. ENCABEZADO DE SESIÓN ACTIVA (HEADER) - CORREGIDO FORZADO
+   ========================================================================== */
+.header-sistema {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0; /* Al definir left y right, se estira obligatoriamente al 100% */
+    height: 70px; /* Altura fija para evitar colapsos por flexbox */
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0 30px;
+    z-index: 9999 !important; /* Lo mandamos al frente de todo */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    display: none; /* Controlado por JS */
+}
+
+.header-contenido {
+    max-width: 1200px;
+    height: 100%; /* Ocupa los 70px del padre */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.usuario-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar-icon {
+    font-size: 22px;
+    background: #e9ecef;
+    padding: 6px 10px;
+    border-radius: 50%;
+}
+
+.detalles {
+    display: flex;
+    flex-direction: column;
+}
+
+.nombre-u {
+    font-size: 14px;
+    font-weight: 700;
+    color: #212529;
+    line-height: 1.2;
+}
+
+.rol-u {
+    font-size: 11px;
+    font-weight: 600;
+    color: #0d6efd; /* Cambiado a azul para que resalte más */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-logout {
+    background-color: #fff0f1;
+    color: #dc3545;
+    border: 1px solid #fecaca;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+    border-color: #dc3545;
+}
+
+/* Modificamos el contenedor principal para que no se pegue al techo */
+.app-container {
+    margin-top: 50px; 
+}
+
+
+/* modal global para mensajes */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.modal-contenido {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+>>>>>>> 9d584b1b6357a6f57d775dd813fd0424a0bef228
+}

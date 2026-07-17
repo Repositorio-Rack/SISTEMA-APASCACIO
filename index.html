@@ -1,0 +1,492 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Control - Inicio</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+<!-- ENCABEZADO GLOBAL DE USUARIO ACTIVO (Oculto por defecto) -->
+<header id="headerUsuario" class="header-sistema" style="display: none;">
+    <div class="header-contenido">
+        <div class="usuario-info">
+            <span class="avatar-icon">👤</span>
+            <div class="detalles">
+                <span id="headerNombreUsuario" class="nombre-u">Cédula: -</span>
+                <span id="headerRolUsuario" class="rol-u">Rol: -</span>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="cerrarSesion()">
+            <span class="logout-icon">🚪</span> Cerrar Sesión
+        </button>
+    </div>
+</header>
+
+
+    <div class="app-container">
+        
+        <!-- VISTA 1: SALUDO Y MENÚ PRINCIPAL -->
+        <div id="vistaBienvenida" class="vista activa">
+            <h1>¡Bienvenido al Sistema!</h1>
+            <p>Por favor, seleccione una opción para gestionar su acceso al esquema de seguridad.</p>
+            <div class="menu-buttons">
+                <button class="btn btn-primary" onclick="navegarA('vistaLogin')">Iniciar Sesión</button>
+                <button class="btn btn-secondary" onclick="navegarA('vistaRegistro')">Registrarse en el Sistema</button>
+            </div>
+        </div>
+
+        <!-- VISTA 2: FORMULARIO DE LOGIN -->
+<div id="vistaLogin" class="vista">
+  <h1>Iniciar Sesión</h1>
+  <p>Ingrese sus credenciales de acceso institucional.</p>
+  <form id="formLogin">
+    <div class="form-group">
+      <label>Cedula de Identidad</label>
+      <!-- Le agregamos id="loginUsuario" -->
+      <input type="text" id="loginUsuario" placeholder="Ej: 25123456" required>
+    </div>
+    <div class="form-group" style="position: relative;">
+
+  <label>Contraseña</label>
+  <input type="password" id="loginPassword" placeholder="........" required style="padding-right: 40px;">
+  
+  <!-- Casilla/Icono para mostrar contraseña -->
+  <span id="togglePassword" style="position: absolute; right: 10px; top: 35px; cursor: pointer; user-select: none; font-size: 18px;">
+    👁️
+  </span>
+</div>
+    
+    <button type="submit" class="btn btn-primary" style="width: 100%;">Ingresar</button>
+  </form>
+  <button class="btn btn-back" onclick="navegarA('vistaBienvenida')">Volver al menú</button>
+</div>
+
+        <!-- VISTA 3: FORMULARIO DE REGISTRO -->
+        <div id="vistaRegistro" class="vista">
+            <h1>Crear Cuenta</h1>
+            <p>Complete sus datos para solicitar el registro de usuario.</p>
+            <form id="formRegistro">
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" placeholder="Ej: Juan Pérez" required>
+                </div>
+                <div class="form-group">
+                    <label>Cédula de Identidad</label>
+                    <input type="text" id="regCedula" placeholder="Ej: 25123456" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" placeholder="Mínimo 8 caracteres" required>
+                </div>
+                <div class="form-group">
+                    <label>Rol Solicitado</label>
+                    <!-- Se poblará dinámicamente con los roles activos de PostgreSQL -->
+                    <select id="selectRoles" required>
+                        <option value="">Cargando roles disponibles...</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-secondary" style="width: 100%;">Enviar Registro</button>
+            </form>
+            <button class="btn btn-back" onclick="navegarA('vistaBienvenida')">Volver al menú</button>
+        </div>
+
+   
+
+   <!-- ==========================================================================
+       VISTA 4: MÓDULO PRINCIPAL DE RRHH
+       ========================================================================== -->
+    <div id="vistaRRHH" class="pantalla-sistema" style="display: none;">
+        <div class="modulo-container">
+            <span>Módulo RRHH</span>
+            <ul class="nav-rrhh">
+                <li><a href="#" onclick="navegarRRHH('nomina')">Nómina</a></li>
+                <li><a href="#" onclick="navegarRRHH('ver-personal')">Ver Personal</a></li>
+                <li><a href="#" onclick="navegarRRHH('registro-personal')" style="color: #0d6efd; background: #e9ecef;">Registro de Personal</a></li>
+            </ul>
+
+            <!-- SUB-VISTA 1: FORMULARIO DE REGISTRO -->
+            <div id="sub-registro-personal" style="display: block;">
+                <h2>Registro de Nuevo Personal</h2>
+                <form id="formRegistroPersonal" class="form-grid">
+                    <div class="form-group">
+                        <label>Cédula de Identidad</label>
+                        <input type="text" id="perCedula" placeholder="Ej: 12345678" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" id="perNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido</label>
+                        <input type="text" id="perApellido" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Sexo</label>
+                        <select id="perSexo" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Nacimiento</label>
+                        <input type="date" id="perFechaNac" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Lugar de Nacimiento</label>
+                        <input type="text" id="perLugarNac" placeholder="Ciudad / Estado" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="text" id="perTelefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="perCorreo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Ingreso</label>
+                        <input type="date" id="perFechaIngreso" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cargo</label>
+                        <input type="text" id="perCargo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Departamento</label>
+                        <!-- Selector dinámico conectado a PostgreSQL -->
+                        <select id="perDepartamento" required>
+                            <option value="">Cargando departamentos...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado Laboral</label>
+                        <select id="perEstadoLaboral" required>
+                            <option value="ACTIVO">ACTIVO</option>
+                            <option value="INACTIVO">INACTIVO</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Dirección de Habitación</label>
+                        <input type="text" id="perDireccion" placeholder="Dirección completa del trabajador" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-guardar">Guardar Personal</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- SUB-VISTA 2: NÓMINA -->
+            <div id="sub-nomina" style="display: none;">
+                <h2>Gestión de Nómina</h2>
+                <p>Contenido del módulo de nómina en desarrollo...</p>
+            </div>
+
+            <!-- SUB-VISTA 3: VER PERSONAL -->
+            <div id="sub-ver-personal" style="display: none;">
+    <h2>Listado de Personal</h2>
+    <table id="tablaPersonal" border="1" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+            <tr style="background: #f8f9fa;">
+                <th>Seleccionar</th>
+                <th>Cédula</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Departamento</th>
+                <th>Cargo</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="cuerpoTablaPersonal">
+            <!-- Los datos se inyectarán aquí dinámicamente -->
+        </tbody>        <!-- Debajo de la tabla -->
+<button onclick="abrirEdicion()">Modificar Selección</button>
+
+<!-- Modal Expandido -->
+<div id="modalEdicion" style="display:none; position:fixed; top:10%; left:25%; width:50%; background:white; padding:20px; border:1px solid #ccc; z-index:100;">
+    <h3>Modificar Personal</h3>
+    <form id="formEdicion" class="form-grid">
+        <input type="hidden" id="editCedulaOriginal"> <!-- Para identificar el registro -->
+        <label>Cédula:</label> <input type="text" id="editCedula">
+        <label>Nombre:</label> <input type="text" id="editNombre">
+        <label>Apellido:</label> <input type="text" id="editApellido">
+        <label>Departamento:</label> <input type="text" id="editDepartamento">
+        <label>Cargo:</label> <input type="text" id="editCargo">
+        <label>Estado:</label> 
+        <select id="editEstado">
+            <option value="ACTIVO">ACTIVO</option>
+            <option value="INACTIVO">INACTIVO</option>
+            <option value="VACACIONES">VACACIONES</option>
+        </select>
+        <button type="submit">Guardar Cambios</button>
+        <button type="button" onclick="document.getElementById('modalEdicion').style.display='none'">Cancelar</button>
+    </form>
+</div>
+    </table>
+</div>
+        </div> 
+    </div>
+    </div>
+
+    <!-- Modal Global de Mensajes -->
+<div id="modalGlobal" class="modal-overlay" style="display: none;">
+    <div class="modal-contenido">
+        <h3 id="modalTitulo">Notificación</h3>
+        <p id="modalMensaje"></p>
+        <button onclick="cerrarModalGlobal()">Aceptar</button>
+    </div>
+</div>
+
+    <script src="renderer.js"></script>
+</body>
+=======
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Control - Inicio</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+<!-- ENCABEZADO GLOBAL DE USUARIO ACTIVO (Oculto por defecto) -->
+<header id="headerUsuario" class="header-sistema" style="display: none;">
+    <div class="header-contenido">
+        <div class="usuario-info">
+            <span class="avatar-icon">👤</span>
+            <div class="detalles">
+                <span id="headerNombreUsuario" class="nombre-u">Cédula: -</span>
+                <span id="headerRolUsuario" class="rol-u">Rol: -</span>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="cerrarSesion()">
+            <span class="logout-icon">🚪</span> Cerrar Sesión
+        </button>
+    </div>
+</header>
+
+
+    <div class="app-container">
+        
+        <!-- VISTA 1: SALUDO Y MENÚ PRINCIPAL -->
+        <div id="vistaBienvenida" class="vista activa">
+            <h1>¡Bienvenido al Sistema!</h1>
+            <p>Por favor, seleccione una opción para gestionar su acceso al esquema de seguridad.</p>
+            <div class="menu-buttons">
+                <button class="btn btn-primary" onclick="navegarA('vistaLogin')">Iniciar Sesión</button>
+                <button class="btn btn-secondary" onclick="navegarA('vistaRegistro')">Registrarse en el Sistema</button>
+            </div>
+        </div>
+
+        <!-- VISTA 2: FORMULARIO DE LOGIN -->
+<div id="vistaLogin" class="vista">
+  <h1>Iniciar Sesión</h1>
+  <p>Ingrese sus credenciales de acceso institucional.</p>
+  <form id="formLogin">
+    <div class="form-group">
+      <label>Cedula de Identidad</label>
+      <!-- Le agregamos id="loginUsuario" -->
+      <input type="text" id="loginUsuario" placeholder="Ej: 25123456" required>
+    </div>
+    <div class="form-group" style="position: relative;">
+
+  <label>Contraseña</label>
+  <input type="password" id="loginPassword" placeholder="........" required style="padding-right: 40px;">
+  
+  <!-- Casilla/Icono para mostrar contraseña -->
+  <span id="togglePassword" style="position: absolute; right: 10px; top: 35px; cursor: pointer; user-select: none; font-size: 18px;">
+    👁️
+  </span>
+</div>
+    
+    <button type="submit" class="btn btn-primary" style="width: 100%;">Ingresar</button>
+  </form>
+  <button class="btn btn-back" onclick="navegarA('vistaBienvenida')">Volver al menú</button>
+</div>
+
+        <!-- VISTA 3: FORMULARIO DE REGISTRO -->
+        <div id="vistaRegistro" class="vista">
+            <h1>Crear Cuenta</h1>
+            <p>Complete sus datos para solicitar el registro de usuario.</p>
+            <form id="formRegistro">
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" placeholder="Ej: Juan Pérez" required>
+                </div>
+                <div class="form-group">
+                    <label>Cédula de Identidad</label>
+                    <input type="text" id="regCedula" placeholder="Ej: 25123456" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" placeholder="Mínimo 8 caracteres" required>
+                </div>
+                <div class="form-group">
+                    <label>Rol Solicitado</label>
+                    <!-- Se poblará dinámicamente con los roles activos de PostgreSQL -->
+                    <select id="selectRoles" required>
+                        <option value="">Cargando roles disponibles...</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-secondary" style="width: 100%;">Enviar Registro</button>
+            </form>
+            <button class="btn btn-back" onclick="navegarA('vistaBienvenida')">Volver al menú</button>
+        </div>
+
+   
+
+   <!-- ==========================================================================
+       VISTA 4: MÓDULO PRINCIPAL DE RRHH
+       ========================================================================== -->
+    <div id="vistaRRHH" class="pantalla-sistema" style="display: none;">
+        <div class="modulo-container">
+            <span>Módulo RRHH</span>
+            <ul class="nav-rrhh">
+                <li><a href="#" onclick="navegarRRHH('nomina')">Nómina</a></li>
+                <li><a href="#" onclick="navegarRRHH('ver-personal')">Ver Personal</a></li>
+                <li><a href="#" onclick="navegarRRHH('registro-personal')" style="color: #0d6efd; background: #e9ecef;">Registro de Personal</a></li>
+            </ul>
+
+            <!-- SUB-VISTA 1: FORMULARIO DE REGISTRO -->
+            <div id="sub-registro-personal" style="display: block;">
+                <h2>Registro de Nuevo Personal</h2>
+                <form id="formRegistroPersonal" class="form-grid">
+                    <div class="form-group">
+                        <label>Cédula de Identidad</label>
+                        <input type="text" id="perCedula" placeholder="Ej: 12345678" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" id="perNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido</label>
+                        <input type="text" id="perApellido" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Sexo</label>
+                        <select id="perSexo" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Nacimiento</label>
+                        <input type="date" id="perFechaNac" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Lugar de Nacimiento</label>
+                        <input type="text" id="perLugarNac" placeholder="Ciudad / Estado" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="text" id="perTelefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="perCorreo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Ingreso</label>
+                        <input type="date" id="perFechaIngreso" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cargo</label>
+                        <input type="text" id="perCargo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Departamento</label>
+                        <!-- Selector dinámico conectado a PostgreSQL -->
+                        <select id="perDepartamento" required>
+                            <option value="">Cargando departamentos...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado Laboral</label>
+                        <select id="perEstadoLaboral" required>
+                            <option value="ACTIVO">ACTIVO</option>
+                            <option value="INACTIVO">INACTIVO</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Dirección de Habitación</label>
+                        <input type="text" id="perDireccion" placeholder="Dirección completa del trabajador" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-guardar">Guardar Personal</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- SUB-VISTA 2: NÓMINA -->
+            <div id="sub-nomina" style="display: none;">
+                <h2>Gestión de Nómina</h2>
+                <p>Contenido del módulo de nómina en desarrollo...</p>
+            </div>
+
+            <!-- SUB-VISTA 3: VER PERSONAL -->
+            <div id="sub-ver-personal" style="display: none;">
+    <h2>Listado de Personal</h2>
+    <table id="tablaPersonal" border="1" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+            <tr style="background: #f8f9fa;">
+                <th>Seleccionar</th>
+                <th>Cédula</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Departamento</th>
+                <th>Cargo</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="cuerpoTablaPersonal">
+            <!-- Los datos se inyectarán aquí dinámicamente -->
+        </tbody>        <!-- Debajo de la tabla -->
+<button onclick="abrirEdicion()">Modificar Selección</button>
+
+<!-- Modal Expandido -->
+<div id="modalEdicion" style="display:none; position:fixed; top:10%; left:25%; width:50%; background:white; padding:20px; border:1px solid #ccc; z-index:100;">
+    <h3>Modificar Personal</h3>
+    <form id="formEdicion" class="form-grid">
+        <input type="hidden" id="editCedulaOriginal"> <!-- Para identificar el registro -->
+        <label>Cédula:</label> <input type="text" id="editCedula">
+        <label>Nombre:</label> <input type="text" id="editNombre">
+        <label>Apellido:</label> <input type="text" id="editApellido">
+        <label>Departamento:</label> <input type="text" id="editDepartamento">
+        <label>Cargo:</label> <input type="text" id="editCargo">
+        <label>Estado:</label> 
+        <select id="editEstado">
+            <option value="ACTIVO">ACTIVO</option>
+            <option value="INACTIVO">INACTIVO</option>
+            <option value="VACACIONES">VACACIONES</option>
+        </select>
+        <button type="submit">Guardar Cambios</button>
+        <button type="button" onclick="document.getElementById('modalEdicion').style.display='none'">Cancelar</button>
+    </form>
+</div>
+    </table>
+</div>
+        </div> 
+    </div>
+    </div>
+
+    <!-- Modal Global de Mensajes -->
+<div id="modalGlobal" class="modal-overlay" style="display: none;">
+    <div class="modal-contenido">
+        <h3 id="modalTitulo">Notificación</h3>
+        <p id="modalMensaje"></p>
+        <button onclick="cerrarModalGlobal()">Aceptar</button>
+    </div>
+</div>
+
+    <script src="renderer.js"></script>
+</body>
+>>>>>>> 9d584b1b6357a6f57d775dd813fd0424a0bef228
+</html>

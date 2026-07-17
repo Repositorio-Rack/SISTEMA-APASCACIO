@@ -1,0 +1,48 @@
+<<<<<<< HEAD
+========================================================================
+SISTEMA DE CONTROL DE CITAS - CENTRO DE SALUD APASCACIO MATA
+========================================================================
+Copyright (C) 2026 [Nombres y Apellidos de los Analistas/Desarrolladores]
+
+Este programa es software libre: usted puede redistribuirlo y/o modificarlo 
+bajo los términos de la Licencia Pública General de GNU (GNU GPL) según 
+lo publicado por la Free Software Foundation, ya sea la versión 3 de la 
+Licencia, o (a su elección) cualquier versión posterior.
+
+Este programa se distribuye con la esperanza de que sea útil, pero SIN 
+NINGUNA GARANTÍA; ni siquiera la garantía implícita de MERCANTIBILIDAD 
+o APTITUD PARA UN PROPÓSITO PARTICULAR. Consulte la Licencia Pública 
+General de GNU para más detalles.
+
+Usted debería haber recibido una copia de la Licencia Pública General 
+de GNU junto con este programa. En caso contrario, consulte 
+<https://www.gnu.org/licenses/>.
+
+------------------------------------------------------------------------
+DESARROLLADO EN EL MARCO DE LA LEY DE INFOGOBIERNO DE LA REPÚBLICA 
+BOLIVARIANA DE VENEZUELA PARA PROMOVER EL USO DE TECNOLOGÍAS LIBRES.
+=======
+========================================================================
+SISTEMA DE CONTROL DE CITAS - CENTRO DE SALUD APASCACIO MATA
+========================================================================
+Copyright (C) 2026 [Nombres y Apellidos de los Analistas/Desarrolladores]
+
+Este programa es software libre: usted puede redistribuirlo y/o modificarlo 
+bajo los términos de la Licencia Pública General de GNU (GNU GPL) según 
+lo publicado por la Free Software Foundation, ya sea la versión 3 de la 
+Licencia, o (a su elección) cualquier versión posterior.
+
+Este programa se distribuye con la esperanza de que sea útil, pero SIN 
+NINGUNA GARANTÍA; ni siquiera la garantía implícita de MERCANTIBILIDAD 
+o APTITUD PARA UN PROPÓSITO PARTICULAR. Consulte la Licencia Pública 
+General de GNU para más detalles.
+
+Usted debería haber recibido una copia de la Licencia Pública General 
+de GNU junto con este programa. En caso contrario, consulte 
+<https://www.gnu.org/licenses/>.
+
+------------------------------------------------------------------------
+DESARROLLADO EN EL MARCO DE LA LEY DE INFOGOBIERNO DE LA REPÚBLICA 
+BOLIVARIANA DE VENEZUELA PARA PROMOVER EL USO DE TECNOLOGÍAS LIBRES.
+>>>>>>> 9d584b1b6357a6f57d775dd813fd0424a0bef228
+------------------------------------------------------------------------
